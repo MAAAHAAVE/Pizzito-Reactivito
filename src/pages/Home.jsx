@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Categories from '../components/Categories';
@@ -36,23 +37,20 @@ const Home = () => {
     const category = categoryId > 0 ? `&category=${categoryId}` : '';
     const search = searchValue ? `&search=${searchValue}` : '';
 
-    fetch(
+    axios.get(
       `https://682dc0774fae188947576122.mockapi.io/items?page=${currentPage}&limit=8${category}${search}&sortBy=${sortType}&order=desc`,
     )
       .then((res) => {
-        if (res.ok) {
-          return res.json();
+        if (res.status === 200) {
+          setPizzas(res.data);
         } else if (res.status === 404) {
-          return [];
+          setPizzas([]);
         } else {
           throw new Error(`Ошибка сервера: ${res.status}`);
         }
       })
-      .then((data) => {
-        setPizzas(data);
-        setIsLoading(false);
-      })
-      .catch((error) => console.error('Fetch error:', error));
+      .catch((error) => console.error('Fetch error:', error))
+      .finally(() => setIsLoading(false));
 
     window.scrollTo(0, 0);
   }, [categoryId, sortType, searchValue, currentPage]);
