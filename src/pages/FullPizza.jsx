@@ -1,11 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const FullPizza = () => {
   const [pizza, setPizza] = React.useState();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     async function fetchPizza() {
@@ -13,6 +14,7 @@ const FullPizza = () => {
         const { data } = await axios.get(`https://682dc0774fae188947576122.mockapi.io/items/${id}`);
         setPizza(data);
       } catch (error) {
+        navigate('/')
         console.error('Error fetching pizza:', error);
       }
     }
