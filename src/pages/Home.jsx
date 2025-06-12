@@ -9,7 +9,6 @@ import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
 
-import { SearchContext } from '../App';
 import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
 import { fetchPizzas } from '../redux/slices/pizzasSlice';
 
@@ -19,9 +18,8 @@ const Home = () => {
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
 
-  const { categoryId, sortType, currentPage } = useSelector((state) => state.filter);
+  const { categoryId, sortType, currentPage, searchValue } = useSelector((state) => state.filter);
   const { pizzas, status } = useSelector((state) => state.pizzas);
-  const { searchValue } = React.useContext(SearchContext);
 
   const onChangeCategory = React.useCallback(
     (idx) => {
@@ -96,11 +94,18 @@ const Home = () => {
         <Sort value={sortType} />
       </div>
       <h2 className="content__title">Все питсы</h2>
-      <div className="content__items">
-        {status === 'loading'
-          ? [...new Array(4)].map((_, index) => <Skeleton key={index} />)
-          : pizzas.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
-      </div>
+      {status === 'error' ? (
+        <div className="content__error-info">
+          <h2>Произошла ошибка 😕</h2>
+          <p>Не удалось загрузить питсы. Попробуйте повторить попытку позже.</p>
+        </div>
+      ) : (
+        <div className="content__items">
+          {status === 'loading'
+            ? [...new Array(4)].map((_, index) => <Skeleton key={index} />)
+            : pizzas.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
+        </div>
+      )}
       <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </>
   );
