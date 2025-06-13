@@ -1,6 +1,7 @@
 import React from 'react';
 import qs from 'qs';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../redux/store';
 import { useNavigate } from 'react-router-dom';
 
 import Categories from '../components/Categories';
@@ -10,25 +11,23 @@ import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
 
 import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
-import { fetchPizzas } from '../redux/slices/pizzasSlice';
+import { fetchPizzas, Status } from '../redux/slices/pizzasSlice';
 
-const Home = () => {
+const Home: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
 
-  const { categoryId, sortType, currentPage, searchValue } = useSelector((state) => state.filter);
-  const { pizzas, status } = useSelector((state) => state.pizzas);
+  const { categoryId, sortType, currentPage, searchValue } = useSelector((state: any) => state.filter);
+  const { pizzas, status } = useSelector((state: any) => state.pizzas);
 
-  const onChangeCategory = React.useCallback(
-    (idx) => {
+  const onChangeCategory = 
+    (idx: number) => {
       dispatch(setCategoryId(idx));
-    },
-    [dispatch],
-  );
+    }
 
-  const onChangePage = (page) => {
+  const onChangePage = (page: number) => {
     dispatch(setCurrentPage(page));
   };
 
@@ -66,10 +65,11 @@ const Home = () => {
       const params = qs.parse(window.location.search.substring(1));
       const categoryIdFromUrl = params.categoryId ? Number(params.categoryId) : 0;
       const currentPageFromUrl = params.currentPage ? Number(params.currentPage) : 1;
-      const sortObj = list.find((obj) => obj.sortProperty === params.sortProperty);
+      const sortObj = list.find((obj) => obj.sortProperty === params.sortBy);
 
       dispatch(
         setFilters({
+          searchValue: typeof params.searchValue === 'string' ? params.searchValue : '',
           categoryId: categoryIdFromUrl,
           currentPage: currentPageFromUrl,
           sortType: sortObj || list[0],
@@ -91,19 +91,19 @@ const Home = () => {
     <>
       <div className="content__top">
         <Categories categoryId={categoryId} onChangeCategory={onChangeCategory} />
-        <Sort value={sortType} />
+        <Sort />
       </div>
       <h2 className="content__title">Все питсы</h2>
-      {status === 'error' ? (
+      {status === Status.ERROR ? (
         <div className="content__error-info">
           <h2>Произошла ошибка 😕</h2>
           <p>Не удалось загрузить питсы. Попробуйте повторить попытку позже.</p>
         </div>
       ) : (
         <div className="content__items">
-          {status === 'loading'
+          {status === Status.LOADING
             ? [...new Array(4)].map((_, index) => <Skeleton key={index} />)
-            : pizzas.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
+            : pizzas.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />)}
         </div>
       )}
       <Pagination currentPage={currentPage} onChangePage={onChangePage} />

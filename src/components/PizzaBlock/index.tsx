@@ -5,9 +5,18 @@ import { Link } from 'react-router-dom';
 
 const pizzaTypes = ['тонкое', 'традиционное'];
 
-const PizzaBlock = ({ id, title, price, imageUrl, types, sizes }) => {
+type PizzaBlockProps = {
+  id: string;
+  title: string;
+  price: number;
+  imageUrl: string;
+  types: any;
+  sizes: any;
+};
+
+const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, types, sizes }) => {
   const dispatch = useDispatch();
-  const cartItem = useSelector((state) => state.cart.items.find((obj) => obj.id === id));
+  const cartItem = useSelector((state: any) => state.cart.items.find((obj) => obj.id === id));
 
   const [pizzaSize, setPizzaSize] = React.useState(0);
   const [pizzaType, setPizzaType] = React.useState(0);

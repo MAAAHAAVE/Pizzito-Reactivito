@@ -1,9 +1,13 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSortType } from '../redux/slices/filterSlice';
+import { setSortType, TSortType } from '../redux/slices/filterSlice';
 
+// type TSortName = {
+//   name: string;
+//   sortProperty: string
+// }
 
-export const list = [
+export const list: TSortType[] = [
   { name: 'популярности (DESC)', sortProperty: 'rating' },
   { name: 'популярности (ASC)', sortProperty: '-rating' },
   { name: 'цена (DESC)', sortProperty: 'price' },
@@ -14,23 +18,23 @@ export const list = [
 
 const Sort = () => {
   const dispatch = useDispatch();
-  const sortType = useSelector((state) => state.filter.sortType);
-  const sortRef = React.useRef();
+  const sortType = useSelector((state: any) => state.filter.sortType);
+  const sortRef = React.useRef(null);
 
   const [isVisiblePopup, setIsVisiblePopup] = React.useState(false);
 
-  const onClickListName = (obj) => {
+  const onClickListName = (obj: TSortType) => {
     setIsVisiblePopup(false);
     dispatch(setSortType(obj));
   };
   React.useEffect(() => {
-    const handleOutsideClick = (e) => {
-      if (!e.composedPath().includes(sortRef.current)) {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (!event.composedPath().includes(sortRef.current)) {
         setIsVisiblePopup(false);
       }
     };
 
-    document.body.addEventListener('click', handleOutsideClick);
+    document.body.addEventListener('click', handleOutsideClick as EventListener);
 
     return () => {
       document.body.removeEventListener('click', handleOutsideClick);

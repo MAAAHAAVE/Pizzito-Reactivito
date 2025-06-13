@@ -3,8 +3,12 @@ import axios from 'axios';
 
 import { useParams, useNavigate } from 'react-router-dom';
 
-const FullPizza = () => {
-  const [pizza, setPizza] = React.useState();
+const FullPizza: React.FC = () => {
+  const [pizza, setPizza] = React.useState<{
+    imageUrl: string;
+    title: string;
+    price: number;
+  }>();
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -14,13 +18,13 @@ const FullPizza = () => {
         const { data } = await axios.get(`https://682dc0774fae188947576122.mockapi.io/items/${id}`);
         setPizza(data);
       } catch (error) {
-        navigate('/')
+        navigate('/');
         console.error('Error fetching pizza:', error);
       }
     }
 
     fetchPizza();
-  }, []);
+  }, [id, navigate]);
 
   if (!pizza) {
     return (
