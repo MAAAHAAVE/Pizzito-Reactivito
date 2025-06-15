@@ -108,7 +108,6 @@ body {
       margin: 0;
     }
   }
-
 }
 
 .cart {
@@ -219,11 +218,28 @@ body {
             display: none;
           }
         }
+
+        &:disabled {
+          opacity: 0.4;
+          border-color: #787878;
+          cursor: default;
+          svg path {
+            fill: #787878;
+          }
+
+          &:active {
+            transform: none;
+          }
+
+          &:hover {
+            background-color: transparent;
+          }
+        }
       }
 
-      b {
-        font-size: 22px;
-      }
+      // b {
+      //   font-size: 22px;
+      // }
     }
 
     &-price {

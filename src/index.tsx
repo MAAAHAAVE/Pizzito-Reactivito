@@ -11,10 +11,14 @@ const container = document.getElementById('root');
 if (container) {
   const root = ReactDOM.createRoot(container);
   root.render(
-      <Router>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </Router>
+    <Router
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+      }}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </Router>,
   );
 }

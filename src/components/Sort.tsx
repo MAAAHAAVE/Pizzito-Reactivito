@@ -16,10 +16,10 @@ export const list: TSortType[] = [
   { name: 'алфавиту (ASC)', sortProperty: '-title' },
 ];
 
-const Sort = () => {
+const Sort: React.FC = React.memo(() => {
   const dispatch = useDispatch();
   const sortType = useSelector((state: any) => state.filter.sortType);
-  const sortRef = React.useRef(null);
+  const sortRef = React.useRef<HTMLDivElement>(null);
 
   const [isVisiblePopup, setIsVisiblePopup] = React.useState(false);
 
@@ -38,8 +38,8 @@ const Sort = () => {
 
     return () => {
       document.body.removeEventListener('click', handleOutsideClick);
-    }
-  }, [])
+    };
+  }, []);
 
   return (
     <div ref={sortRef} className="sort">
@@ -63,6 +63,7 @@ const Sort = () => {
           <ul>
             {list.map((obj) => (
               <li
+                key={obj.name}
                 onClick={() => onClickListName(obj)}
                 className={sortType.name === obj.name ? 'active' : ''}>
                 {obj.name}
@@ -73,6 +74,6 @@ const Sort = () => {
       )}
     </div>
   );
-};
+});
 
 export default Sort;

@@ -11,7 +11,7 @@ type PizzaBlockProps = {
   price: number;
   imageUrl: string;
   types: any;
-  sizes: any;
+  sizes: number[];
 };
 
 const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, types, sizes }) => {
@@ -44,7 +44,10 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, typ
         <div className="pizza-block__selector">
           <ul>
             {types.map((type) => (
-              <li onClick={() => setPizzaType(type)} className={pizzaType === type ? 'active' : ''}>
+              <li
+                key={type}
+                onClick={() => setPizzaType(type)}
+                className={pizzaType === type ? 'active' : ''}>
                 {pizzaTypes[type]}
               </li>
             ))}
@@ -52,6 +55,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, typ
           <ul>
             {sizes.map((size, index) => (
               <li
+                key={index}
                 onClick={() => setPizzaSize(index)}
                 className={pizzaSize === index ? 'active' : ''}>
                 {size} см

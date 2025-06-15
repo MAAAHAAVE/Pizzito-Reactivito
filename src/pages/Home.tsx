@@ -19,13 +19,17 @@ const Home: React.FC = () => {
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
 
-  const { categoryId, sortType, currentPage, searchValue } = useSelector((state: any) => state.filter);
+  const { categoryId, sortType, currentPage, searchValue } = useSelector(
+    (state: any) => state.filter,
+  );
   const { pizzas, status } = useSelector((state: any) => state.pizzas);
 
-  const onChangeCategory = 
+  const onChangeCategory = React.useCallback(
     (idx: number) => {
       dispatch(setCategoryId(idx));
-    }
+    },
+    [dispatch],
+  );
 
   const onChangePage = (page: number) => {
     dispatch(setCurrentPage(page));
