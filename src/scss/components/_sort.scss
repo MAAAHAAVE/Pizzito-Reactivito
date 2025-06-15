@@ -12,12 +12,14 @@
 
     b {
       margin-right: 8px;
+      text-wrap: nowrap;
     }
 
     span {
       color: $orange;
       border-bottom: 1px dashed $orange;
       cursor: pointer;
+      text-wrap: nowrap
     }
   }
 
@@ -31,16 +33,17 @@
     overflow: hidden;
     padding: 10px 0;
     width: 160px;
+    
 
     ul {
       overflow: hidden;
       li {
         padding: 12px 20px;
         cursor: pointer;
-
+        text-wrap: nowrap;
         &.active,
         &:hover {
-          background: rgba(254, 95, 30, 0.05);
+          background: rgba(30, 101, 254, 0.05);
         }
 
         &.active {

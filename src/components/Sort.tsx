@@ -2,18 +2,13 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSortType, TSortType } from '../redux/slices/filterSlice';
 
-// type TSortName = {
-//   name: string;
-//   sortProperty: string
-// }
-
 export const list: TSortType[] = [
-  { name: 'популярности↓', sortProperty: 'rating' },
-  { name: 'популярности↑', sortProperty: '-rating' },
-  { name: 'ценe↓', sortProperty: 'price' },
-  { name: 'ценe↑', sortProperty: '-price' },
-  // { name: 'алфавиту↓', sortProperty: 'title' },
-  // { name: 'алфавиту↑', sortProperty: '-title' },
+  { name: 'популярности ↓', sortProperty: 'rating' },
+  { name: 'популярности ↑', sortProperty: '-rating' },
+  { name: 'ценe ↓', sortProperty: 'price' },
+  { name: 'ценe ↑', sortProperty: '-price' },
+  // { name: 'алфавиту ↓', sortProperty: 'title' },
+  // { name: 'алфавиту ↑', sortProperty: '-title' },
 ];
 
 const Sort: React.FC = React.memo(() => {

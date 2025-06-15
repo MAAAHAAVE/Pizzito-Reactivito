@@ -17,7 +17,7 @@ const initialState: IFilterSliseState = {
   categoryId: 0,
   currentPage: 1,
   sortType: {
-    name: 'популярности (DESC)',
+    name: 'популярности↓',
     sortProperty: 'rating',
   },
 };
