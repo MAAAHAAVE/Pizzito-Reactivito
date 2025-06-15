@@ -1,7 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CartItem from '../components/CartItem';
-import { clearItems, selectCart } from '../redux/slices/cartSlice';
+import { clearItems } from '../redux/slices/cart/slice';
+import {selectCart} from '../redux/slices/cart/selectors'
 import CartEmpty from '../components/CartEmpty';
 
 const Cart: React.FC = () => {
@@ -10,7 +11,7 @@ const Cart: React.FC = () => {
 
   const onClickClear = () => {
     dispatch(clearItems());
-  }
+  };
 
   if (!totalPrice) {
     return <CartEmpty />;

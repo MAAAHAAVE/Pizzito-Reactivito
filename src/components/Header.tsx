@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 
 import logoSvg from '../assets/img/pizza-logo.png';
 import Search from './Search';
-import { selectCart } from '../redux/slices/cartSlice';
+import { selectCart } from '../redux/slices/cart/selectors';
 
 const Header = () => {
   const { items, totalPrice } = useSelector(selectCart);
